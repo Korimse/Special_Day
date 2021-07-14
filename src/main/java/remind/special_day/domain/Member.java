@@ -32,11 +32,11 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
-//    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
-//    private List<Chat> chats = new ArrayList<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Chat> chats = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-//    private Set<Board> boards = new HashSet<>();
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private Set<Board> boards = new HashSet<>();
 
     @Builder
     public Member(String email, String password, MemberRole memberRole) {

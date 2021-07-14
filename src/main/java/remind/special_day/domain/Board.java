@@ -23,18 +23,18 @@ public class Board {
     private String content;
     private LocalDateTime createDate;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "member_id")
-//    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-//    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-//    private Set<Comment> comments = new HashSet<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private Set<Comment> comments = new HashSet<>();
 
-//    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-//    private Set<Album> albums = new HashSet<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private Set<Album> albums = new HashSet<>();
 
-//    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
-//    private Set<BoardTag> boardTags = new HashSet<>();
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private Set<BoardTag> boardTags = new HashSet<>();
 
     @Builder
     public Board(String area, String content, LocalDateTime createDate) {

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,4 +19,7 @@ public class Tag {
     private Long id;
 
     private String tag;
+
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
+    private Set<BoardTag> boardTags = new HashSet<>();
 }
