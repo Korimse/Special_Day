@@ -1,4 +1,4 @@
-package remind.special_day.controller.member;
+package remind.special_day.controller.connect;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

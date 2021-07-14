@@ -39,6 +39,7 @@ public class MemberService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisService redisService;
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
@@ -58,7 +59,7 @@ public class MemberService implements UserDetailsService {
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        log.info("login-----------------");
+
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.createToken(authentication);
 
@@ -68,7 +69,11 @@ public class MemberService implements UserDetailsService {
                 .value(tokenDto.getRefreshToken())
                 .build();
 
-        refreshTokenRepository.save(refreshToken);
+//        refreshTokenRepository.save(refreshToken);
+
+        // Redis Save
+        redisService.setData(memberRequestDto.getEmail(), refreshToken.getValue());
+        redisService.setDataExpire(memberRequestDto.getEmail(), refreshToken.getValue(), 36000);
 
         // 5. 토큰 발급
         return tokenDto;
@@ -76,7 +81,6 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
-        log.info("dkdkdkdk");
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
@@ -86,20 +90,28 @@ public class MemberService implements UserDetailsService {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
-        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
+//        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
+//                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
 
-        // 4. Refresh Token 일치하는지 검사
-        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
+        String refreshToken = redisService.getData(tokenRequestDto.getEmail());
+
+        if (!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
+
+        // 4. Refresh Token 일치하는지 검사
+//        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
+//            throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
+//        }
 
         // 5. 새로운 토큰 생성
         TokenDto tokenDto = tokenProvider.createToken(authentication);
 
         // 6. 저장소 정보 업데이트
-        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
-        refreshTokenRepository.save(newRefreshToken);
+//        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
+//        refreshTokenRepository.save(newRefreshToken);
+        redisService.setData(tokenRequestDto.getEmail(), tokenDto.getRefreshToken());
+        redisService.setDataExpire(tokenRequestDto.getEmail(), tokenDto.getRefreshToken(), 36000);
 
         // 토큰 발급
         return tokenDto;

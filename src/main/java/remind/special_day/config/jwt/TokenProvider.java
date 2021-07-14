@@ -65,7 +65,6 @@ public class TokenProvider {
     }
 
     public Authentication getAuthentication(String accessToken) {
-        log.info("login---");
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
