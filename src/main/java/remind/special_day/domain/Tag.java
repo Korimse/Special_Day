@@ -1,8 +1,6 @@
 package remind.special_day.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +8,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Tag {
 
@@ -20,6 +19,8 @@ public class Tag {
 
     private String tag;
 
-    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
-    private Set<BoardTag> boardTags = new HashSet<>();
+    public Tag(Long id, String tag) {
+        this.id = id;
+        this.tag = tag;
+    }
 }

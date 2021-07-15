@@ -1,4 +1,4 @@
-package remind.special_day.controller.connect;
+package remind.special_day.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

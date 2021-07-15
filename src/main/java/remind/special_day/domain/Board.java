@@ -2,6 +2,8 @@ package remind.special_day.domain;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import javax.naming.ldap.HasControls;
@@ -11,7 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Setter
 @Getter
+@NoArgsConstructor
 public class Board {
 
     @Id
