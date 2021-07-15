@@ -91,6 +91,9 @@ public class MemberService implements UserDetailsService {
 
         String refreshToken = redisService.getData(authentication.getName());
 
+
+//        Optional<Member> byId1 = memberRepository.findById(Long.parseLong(authentication.getName()));
+
         if (!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
@@ -143,7 +146,6 @@ public class MemberService implements UserDetailsService {
 
     private UserDetails createUserDetails(Member member) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getMemberRole().toString());
-        System.out.println("grantedAuthority = " + (grantedAuthority));
         return new User(
                 String.valueOf(member.getId()),
                 member.getPassword(),

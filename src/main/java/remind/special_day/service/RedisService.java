@@ -21,7 +21,8 @@ public class RedisService {
 
     public String getData(String key) {
         ValueOperations<String, String> stringStringValueOperations = redisTemplate.opsForValue();
-        return stringStringValueOperations.get(key);
+        String refreshToken = stringStringValueOperations.get(key);
+        return refreshToken;
     }
 
     public void setDataExpire(String key, String value, long duration) {
