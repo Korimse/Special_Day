@@ -49,20 +49,25 @@ class MemberServiceTest {
     @Test
     void 회원가입() {
         MemberRequestDto memberRequestDto = new MemberRequestDto("member1", "1234");
+        MemberRequestDto memberRequestDto1 = new MemberRequestDto("member2", "12345");
 
         Member member1 = memberRequestDto.toMember(passwordEncoder);
+        Member member2 = memberRequestDto1.toMember(passwordEncoder);
 
         MemberResponseDto of = MemberResponseDto.of(memberRepository.save(member1));
+        MemberResponseDto of1 = MemberResponseDto.of(memberRepository.save(member2));
 
         Optional<Member> getMember = memberRepository.findByEmail(of.getEmail());
+        Optional<Member> getMember1 = memberRepository.findByEmail(of1.getEmail());
 
         assertThat(member1.getEmail()).isEqualTo(getMember.get().getEmail());
+        assertThat(member2.getEmail()).isEqualTo(getMember1.get().getEmail());
     }
 
     @Test
     void 로그인() {
         //signup
-        MemberRequestDto memberRequestDto = new MemberRequestDto("member1", "1234");
+        MemberRequestDto memberRequestDto = new MemberRequestDto("member2", "12345");
         Member member1 = memberRequestDto.toMember(passwordEncoder);
         MemberResponseDto.of(memberRepository.save(member1));
 
@@ -91,7 +96,7 @@ class MemberServiceTest {
     @Test
     void 재발급() {
 
-        TokenRequestDto tokenRequestDto = new TokenRequestDto("mujeup01", "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNjI3NTcxNX0.XafGwlkHuXCJ8CFwiSMOyeXaBkSGIdwCDsAbXVC72KqkSfegyWhD5WjWWFrp9uns1xIr6EWiUYLBaOAI9N1VQA", "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjY1NzYzNDJ9.IG-3xqYnIkLDoM9gE-dCpgTvU-UeOchSqk5z-O7L3LAh_FoM6j3-cunFc0eCU7D4mSq_K0tpTz-OZzMDtYw5hg");
+        TokenRequestDto tokenRequestDto = new TokenRequestDto("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNjI3NTcxNX0.XafGwlkHuXCJ8CFwiSMOyeXaBkSGIdwCDsAbXVC72KqkSfegyWhD5WjWWFrp9uns1xIr6EWiUYLBaOAI9N1VQA", "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjY1NzYzNDJ9.IG-3xqYnIkLDoM9gE-dCpgTvU-UeOchSqk5z-O7L3LAh_FoM6j3-cunFc0eCU7D4mSq_K0tpTz-OZzMDtYw5hg");
 
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");

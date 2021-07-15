@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import remind.special_day.domain.MemberRole;
 
 @EnableWebSecurity
 @Configuration
@@ -28,9 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/member/signup").permitAll()
-                .antMatchers("/member/login").permitAll()
-                .antMatchers("/member/reissue").permitAll()
+                .antMatchers("/member/**").permitAll()
                 .antMatchers("/redis/**").permitAll()
                 .anyRequest().authenticated();
         http.cors().and();

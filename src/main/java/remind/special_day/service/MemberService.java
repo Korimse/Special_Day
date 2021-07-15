@@ -1,9 +1,7 @@
 package remind.special_day.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -24,7 +22,6 @@ import remind.special_day.dto.jwt.TokenRequestDto;
 import remind.special_day.dto.member.MemberRequestDto;
 import remind.special_day.dto.member.MemberResponseDto;
 import remind.special_day.repository.MemberRepository;
-import remind.special_day.repository.RefreshTokenRepository;
 import remind.special_day.util.SecurityUtil;
 
 import java.util.Collections;
@@ -38,7 +35,6 @@ public class MemberService implements UserDetailsService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
     private final RedisService redisService;
 
     @Transactional
@@ -72,8 +68,8 @@ public class MemberService implements UserDetailsService {
 //        refreshTokenRepository.save(refreshToken);
 
         // Redis Save
-        redisService.setData(memberRequestDto.getEmail(), refreshToken.getValue());
-        redisService.setDataExpire(memberRequestDto.getEmail(), refreshToken.getValue(), 36000);
+        redisService.setData(authentication.getName(), refreshToken.getValue());
+        redisService.setDataExpire(authentication.getName(), refreshToken.getValue(), 36000);
 
         // 5. 토큰 발급
         return tokenDto;
@@ -93,7 +89,7 @@ public class MemberService implements UserDetailsService {
 //        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
 //                .orElseThrow(() -> new RuntimeException("로그아웃 된 사용자입니다."));
 
-        String refreshToken = redisService.getData(tokenRequestDto.getEmail());
+        String refreshToken = redisService.getData(authentication.getName());
 
         if (!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
@@ -110,8 +106,8 @@ public class MemberService implements UserDetailsService {
         // 6. 저장소 정보 업데이트
 //        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 //        refreshTokenRepository.save(newRefreshToken);
-        redisService.setData(tokenRequestDto.getEmail(), tokenDto.getRefreshToken());
-        redisService.setDataExpire(tokenRequestDto.getEmail(), tokenDto.getRefreshToken(), 36000);
+        redisService.setData(authentication.getName(), tokenDto.getRefreshToken());
+        redisService.setDataExpire(authentication.getName(), tokenDto.getRefreshToken(), 36000);
 
         // 토큰 발급
         return tokenDto;
