@@ -9,12 +9,14 @@ import remind.special_day.domain.Member;
 import remind.special_day.dto.board.BoardAddRequestDto;
 import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.dto.board.BoardResponseDto;
+import remind.special_day.dto.board.BoardUpdateRequestDto;
 import remind.special_day.dto.tag.TagResponseDto;
 import remind.special_day.exception.member.EmailNotFound;
 import remind.special_day.repository.BoardRepository;
 import remind.special_day.repository.BoardRepositorySupport;
 import remind.special_day.repository.MemberRepository;
 import remind.special_day.repository.TagRepository;
+import remind.special_day.util.SecurityUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -94,11 +96,37 @@ public class BoardService {
         Member member = memberRepository.findByEmail(requestDto.getEmail())
                 .orElseThrow(EmailNotFound::new);
         Board board = albumService.addBoardAlbums(requestDto);
-        tagService.addBoardTag(board, requestDto);
+        tagService.addBoardTag(board, requestDto.getTags());
         board.setMember(member);
         boardRepository.save(board);
 
         return board.getId();
+    }
+
+    @Transactional
+    public Long UpdateBoard(Long board_id, BoardUpdateRequestDto requestDto) {
+
+        Board board = boardRepository.findById(board_id)
+                .orElseThrow(RuntimeException::new);
+
+        if(!requestDto.getContent().isEmpty()) {
+            board.setContent(requestDto.getContent());
+        }
+        if(!requestDto.getTags().isEmpty()) {
+            tagService.updateBoardTag(board, requestDto.getTags());
+        }
+        return board_id;
+    }
+
+    @Transactional
+    public Long deleteBoard(Long boardId) {
+        Long currentMemberId = SecurityUtil.getCurrentMemberId();
+        Board board = boardRepository.findById(boardId).orElseThrow(RuntimeException::new);
+        if(!currentMemberId.equals(board.getMember().getId())){
+            throw new RuntimeException();
+        }
+        boardRepository.delete(board);
+        return boardId;
     }
 
 

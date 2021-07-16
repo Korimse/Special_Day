@@ -26,14 +26,24 @@ public class TagService {
     }
 
     @Transactional
-    public void addBoardTag(Board board, BoardAddRequestDto requestDto) {
-        Set<String> tags = requestDto.getTags();
-
+    public void addBoardTag(Board board, Set<String> tags) {
         tags.forEach(tag -> {
             BoardTag boardTag = new BoardTag();
             Tag savedTag = addTag(tag);
             boardTag.addBoard(board);
             boardTag.addTag(savedTag);
+        });
+    }
+
+    @Transactional
+    public void updateBoardTag(Board board, Set<String> tags) {
+        tags.forEach(tag -> {
+            if(tagRepository.findByTag(tag).isEmpty()) {
+                BoardTag boardTag = new BoardTag();
+                Tag savedTag = addTag(tag);
+                boardTag.addBoard(board);
+                boardTag.addTag(savedTag);
+            }
         });
     }
 

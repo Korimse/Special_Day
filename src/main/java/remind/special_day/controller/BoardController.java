@@ -7,6 +7,7 @@ import remind.special_day.domain.Board;
 import remind.special_day.dto.board.BoardAddRequestDto;
 import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.dto.board.BoardResponseDto;
+import remind.special_day.dto.board.BoardUpdateRequestDto;
 import remind.special_day.service.BoardService;
 
 import java.util.List;
@@ -48,5 +49,10 @@ public class BoardController {
     @PostMapping("/write")
     public ResponseEntity<Long> addBoard(@RequestBody BoardAddRequestDto boardAddRequestDto) {
         return ResponseEntity.ok(boardService.addBoard(boardAddRequestDto));
+    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<Long> updateBoard(@RequestBody BoardUpdateRequestDto boardUpdateRequestDto, @PathVariable("id") Long id) {
+        return ResponseEntity.ok(boardService.UpdateBoard(id, boardUpdateRequestDto));
     }
 }

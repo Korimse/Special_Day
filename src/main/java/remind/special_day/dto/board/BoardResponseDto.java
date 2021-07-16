@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 public class BoardResponseDto {
     private Long id;
     private String area;
+    private String content;
     private LocalDateTime createDate;
     private String email;
     private List<String> comments;
@@ -23,6 +24,7 @@ public class BoardResponseDto {
         return BoardResponseDto.builder()
                 .id(board.getId())
                 .area(board.getArea())
+                .content(board.getContent())
                 .createDate(board.getCreateDate())
                 .email(board.getMember().getEmail())
                 .comments(board.getComments().stream()
