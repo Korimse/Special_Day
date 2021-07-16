@@ -31,10 +31,12 @@ public class InitDB {
 
         public void dbInit1() {
             Member member1 = createMember("mujeup", "1234");
+            Member member2 = createMember("anrimy", "12345");
             em.persist(member1);
+            em.persist(member2);
 
-            Board board1 = createBoard("Incheon", "my home");
-            Board board2 = createBoard("Seoul", "trip");
+            Board board1 = createBoard("Incheon", "my home", member1);
+            Board board2 = createBoard("Seoul", "trip", member2);
             em.persist(board1);
             em.persist(board2);
 
@@ -59,12 +61,13 @@ public class InitDB {
             return member;
         }
 
-        private Board createBoard(String area, String content) {
+        private Board createBoard(String area, String content, Member member) {
             Set<BoardTag> boardTags = new HashSet<>();
             Board board = new Board();
             board.setArea(area);
             board.setContent(content);
             board.setBoardTags(boardTags);
+            board.setMember(member);
             return board;
         }
 

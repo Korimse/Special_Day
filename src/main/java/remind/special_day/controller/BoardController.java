@@ -27,4 +27,9 @@ public class BoardController {
     public ResponseEntity<List<BoardListResponseDto>> findByTag(@PathVariable("tag") String tag) {
         return ResponseEntity.ok(boardService.findBoardByTag(tag));
     }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<List<BoardListResponseDto>> findByEmail(@PathVariable("email") String email) {
+        return ResponseEntity.ok(boardService.findBoardById(email));
+    }
 }

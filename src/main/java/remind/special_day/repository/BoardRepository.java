@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 import remind.special_day.domain.Board;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {

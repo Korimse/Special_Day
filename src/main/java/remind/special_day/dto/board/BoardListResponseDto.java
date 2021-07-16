@@ -18,7 +18,7 @@ public class BoardListResponseDto {
     private Long id;
     private String area;
     private LocalDateTime createDate;
-    private Member member;
+    private String email;
     private int commentCount;
     private int albumCount;
     private List<TagResponseDto> boardTagList;
@@ -28,7 +28,7 @@ public class BoardListResponseDto {
                 .id(board.getId())
                 .area(board.getArea())
                 .createDate(board.getCreateDate())
-                .member(board.getMember())
+                .email(board.getMember().getEmail())
                 .commentCount(board.getComments().size())
                 .albumCount(board.getAlbums().size())
                 .boardTagList(board.getBoardTags()

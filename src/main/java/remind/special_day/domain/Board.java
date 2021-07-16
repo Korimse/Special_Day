@@ -1,5 +1,8 @@
 package remind.special_day.domain;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +19,7 @@ import java.util.Set;
 @Setter
 @Getter
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Board {
 
     @Id

@@ -46,8 +46,12 @@ public class BoardService {
     /**
      * Id를 통해 BoardList 조회
      */
-    public List<BoardListResponseDto> findBoardById(Long id) {
-        return null;
+    public List<BoardListResponseDto> findBoardById(String email) {
+        return boardRepositorySupport.findByMember(email)
+                .stream()
+                .map(BoardListResponseDto::dto)
+                .sorted(Comparator.comparing(BoardListResponseDto::getId, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
     }
 
     /**

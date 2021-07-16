@@ -36,9 +36,9 @@ class BoardServiceTest {
         QBoardTag boardTag = QBoardTag.boardTag;
         QTag tag1 = QTag.tag1;
 
-        List<Board> boardList = boardRepositorySupport.findByTag("home");
-        Set<String> collect1 = boardList.stream().map(board1 -> board1.getContent()).collect(Collectors.toSet());
-        System.out.println("fetch = " + collect1);
+//        List<Board> boardList = boardRepositorySupport.findByMember("anrimy");
+//        Set<String> collect1 = boardList.stream().map(board1 -> board1.getContent()).collect(Collectors.toSet());
+//        System.out.println("fetch = " + collect1);
 
     }
 }
