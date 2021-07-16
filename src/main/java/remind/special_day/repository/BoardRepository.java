@@ -10,9 +10,9 @@ import java.util.Optional;
 
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
-    Optional<Board> findBoardById(Long id);
 
     @Override
     @EntityGraph(attributePaths = {"member", "boardTags", "boardTags.tag"}, type = EntityGraph.EntityGraphType.LOAD)
     List<Board> findAll();
+
 }

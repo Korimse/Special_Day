@@ -3,6 +3,7 @@ package remind.special_day.dto.tag;
 import lombok.*;
 import remind.special_day.domain.Tag;
 
+
 @Getter
 @Setter
 @Builder
@@ -14,6 +15,7 @@ public class TagResponseDto {
     private String tag;
 
     public TagResponseDto(Tag tag) {
+        this.id = tag.getId();
         this.tag = tag.getTag();
     }
 }

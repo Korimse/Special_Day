@@ -17,7 +17,6 @@ public class BoardListResponseDto {
 
     private Long id;
     private String area;
-    private String content;
     private LocalDateTime createDate;
     private Member member;
     private int commentCount;
@@ -28,7 +27,6 @@ public class BoardListResponseDto {
         return BoardListResponseDto.builder()
                 .id(board.getId())
                 .area(board.getArea())
-                .content(board.getContent())
                 .createDate(board.getCreateDate())
                 .member(board.getMember())
                 .commentCount(board.getComments().size())

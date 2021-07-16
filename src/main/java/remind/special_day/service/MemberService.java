@@ -120,6 +120,11 @@ public class MemberService implements UserDetailsService {
     @Transactional
     public String logout() {
         MemberResponseDto myInfo = getMyInfo();
+        try{
+            redisService.deleteData(SecurityUtil.getCurrentMemberId().toString());
+        } catch (RuntimeException e) {
+            log.info("이미 로그아웃 처리가 되었씁니다.");
+        }
         log.info(myInfo.getEmail()+"logout 되었습니다.");
         return myInfo.getEmail();
     }

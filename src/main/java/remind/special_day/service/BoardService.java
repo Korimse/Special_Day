@@ -5,7 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.dto.board.BoardResponseDto;
+import remind.special_day.dto.tag.TagResponseDto;
 import remind.special_day.repository.BoardRepository;
+import remind.special_day.repository.BoardRepositorySupport;
+import remind.special_day.repository.TagRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardRepositorySupport boardRepositorySupport;
 
     /**
      * Board 조회
@@ -31,8 +35,12 @@ public class BoardService {
     /**
      * Tag를 통해 BoardList 조회
      */
-    public List<BoardListResponseDto> findBoardByTag(List<String> tag) {
-        return null;
+    public List<BoardListResponseDto> findBoardByTag(String tag) {
+        return boardRepositorySupport.findByTag(tag)
+                .stream()
+                .map(BoardListResponseDto::dto)
+                .sorted(Comparator.comparing(BoardListResponseDto::getId, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
     }
 
     /**
