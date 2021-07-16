@@ -10,6 +10,7 @@ import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.service.BoardService;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/board")

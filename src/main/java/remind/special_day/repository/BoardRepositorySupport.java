@@ -31,6 +31,7 @@ public class BoardRepositorySupport {
 
     public List<Board> findByMember(String email) {
         return jpaQueryFactory.selectFrom(board)
+                .distinct()
                 .join(board.member, member)
                 .fetchJoin()
                 .join(board.boardTags, boardTag)
