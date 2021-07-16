@@ -21,7 +21,7 @@ public class BoardListResponseDto {
     private String email;
     private int commentCount;
     private int albumCount;
-    private List<TagResponseDto> boardTagList;
+    private List<String> boardTagList;
 
     public static BoardListResponseDto dto(Board board) {
         return BoardListResponseDto.builder()
@@ -32,9 +32,9 @@ public class BoardListResponseDto {
                 .commentCount(board.getComments().size())
                 .albumCount(board.getAlbums().size())
                 .boardTagList(board.getBoardTags()
-                    .stream()
-                    .map(tag -> new TagResponseDto(tag.getTag()))
-                    .collect(Collectors.toList()))
+                        .stream()
+                        .map(boardTag -> boardTag.getTag().getTag())
+                        .collect(Collectors.toList()))
                 .build();
     }
 

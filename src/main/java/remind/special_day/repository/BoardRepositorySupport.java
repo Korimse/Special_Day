@@ -41,4 +41,17 @@ public class BoardRepositorySupport {
                 .where(board.member.email.eq(email))
                 .fetch();
     }
+
+    public List<Board> findByArea(String area) {
+        return jpaQueryFactory.selectFrom(board)
+                .distinct()
+                .join(board.member, member)
+                .fetchJoin()
+                .join(board.boardTags, boardTag)
+                .fetchJoin()
+                .join(boardTag.tag, tag1)
+                .fetchJoin()
+                .where(board.area.eq(area))
+                .fetch();
+    }
 }

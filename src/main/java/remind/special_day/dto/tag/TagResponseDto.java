@@ -15,7 +15,7 @@ public class TagResponseDto {
     private String tag;
 
     public TagResponseDto(Tag tag) {
-        this.id = tag.getId();
         this.tag = tag.getTag();
     }
+
 }
