@@ -30,5 +30,9 @@ public class BoardTag {
         this.board.getBoardTags().add(this);
     }
 
+    public void addTag(Tag tag) {
+        this.tag = tag;
+    }
+
 
 }

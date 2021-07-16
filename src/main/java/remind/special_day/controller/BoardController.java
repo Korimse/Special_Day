@@ -2,11 +2,9 @@ package remind.special_day.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import remind.special_day.domain.Board;
+import remind.special_day.dto.board.BoardAddRequestDto;
 import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.dto.board.BoardResponseDto;
 import remind.special_day.service.BoardService;
@@ -45,5 +43,10 @@ public class BoardController {
     @GetMapping("/id/{id}")
     public ResponseEntity<List<BoardResponseDto>> findById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(boardService.findBoardByBoardId(id));
+    }
+
+    @PostMapping("/write")
+    public ResponseEntity<Long> addBoard(@RequestBody BoardAddRequestDto boardAddRequestDto) {
+        return ResponseEntity.ok(boardService.addBoard(boardAddRequestDto));
     }
 }

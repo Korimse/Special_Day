@@ -1,14 +1,19 @@
 package remind.special_day.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import remind.special_day.domain.Board;
+import remind.special_day.domain.Member;
+import remind.special_day.dto.board.BoardAddRequestDto;
 import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.dto.board.BoardResponseDto;
 import remind.special_day.dto.tag.TagResponseDto;
+import remind.special_day.exception.member.EmailNotFound;
 import remind.special_day.repository.BoardRepository;
 import remind.special_day.repository.BoardRepositorySupport;
+import remind.special_day.repository.MemberRepository;
 import remind.special_day.repository.TagRepository;
 
 import java.util.Comparator;
@@ -23,6 +28,9 @@ import java.util.stream.Collectors;
 public class BoardService {
     private final BoardRepository boardRepository;
     private final BoardRepositorySupport boardRepositorySupport;
+    private final MemberRepository memberRepository;
+    private final AlbumService albumService;
+    private final TagService tagService;
 
     /**
      * Board 조회
@@ -75,6 +83,22 @@ public class BoardService {
                 .stream()
                 .map(BoardResponseDto::dto)
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * Add Board
+     * 글 작성
+     */
+    @Transactional
+    public Long addBoard(BoardAddRequestDto requestDto) {
+        Member member = memberRepository.findByEmail(requestDto.getEmail())
+                .orElseThrow(EmailNotFound::new);
+        Board board = albumService.addBoardAlbums(requestDto);
+        tagService.addBoardTag(board, requestDto);
+        board.setMember(member);
+        boardRepository.save(board);
+
+        return board.getId();
     }
 
 
