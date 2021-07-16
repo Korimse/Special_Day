@@ -55,4 +55,9 @@ public class BoardController {
     public ResponseEntity<Long> updateBoard(@RequestBody BoardUpdateRequestDto boardUpdateRequestDto, @PathVariable("id") Long id) {
         return ResponseEntity.ok(boardService.UpdateBoard(id, boardUpdateRequestDto));
     }
+
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<Long> deleteBoard(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(boardService.deleteBoard(id));
+    }
 }

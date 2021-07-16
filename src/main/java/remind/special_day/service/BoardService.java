@@ -93,7 +93,9 @@ public class BoardService {
      */
     @Transactional
     public Long addBoard(BoardAddRequestDto requestDto) {
-        Member member = memberRepository.findByEmail(requestDto.getEmail())
+        Long currentMemberId = SecurityUtil.getCurrentMemberId();
+
+        Member member = memberRepository.findById(currentMemberId)
                 .orElseThrow(EmailNotFound::new);
         Board board = albumService.addBoardAlbums(requestDto);
         tagService.addBoardTag(board, requestDto.getTags());

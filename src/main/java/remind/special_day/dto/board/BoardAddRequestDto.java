@@ -21,9 +21,6 @@ public class BoardAddRequestDto {
     @NotEmpty(message = "내용은 필수입니다.")
     private String content;
 
-    @NotEmpty(message = "유저는 필수입니다.")
-    private String email;
-
     @NotEmpty(message = "테그는 필수입니다.")
     private Set<String> tags;
 
