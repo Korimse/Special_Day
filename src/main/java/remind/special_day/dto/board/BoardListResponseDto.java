@@ -3,9 +3,6 @@ package remind.special_day.dto.board;
 import lombok.Builder;
 import lombok.Getter;
 import remind.special_day.domain.Board;
-import remind.special_day.domain.BoardTag;
-import remind.special_day.domain.Member;
-import remind.special_day.dto.tag.TagResponseDto;
 
 import java.time.LocalDateTime;
 import java.util.List;

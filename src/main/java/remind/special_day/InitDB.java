@@ -40,6 +40,18 @@ public class InitDB {
             em.persist(board1);
             em.persist(board2);
 
+            Comment comment1 = createComment(board1, member1, "hi");
+            Comment comment2 = createComment(board1, member2, "Oh, Me too");
+            Comment comment3 = createComment(board1, member2, "Fuck");
+            Comment comment4 = createComment(board2, member1, "Don't say F word");
+            Comment comment5 = createComment(board2, member2, "shit");
+            em.persist(comment1);
+            em.persist(comment2);
+            em.persist(comment3);
+            em.persist(comment4);
+            em.persist(comment5);
+
+
             Tag tag1 = createTag("home");
             Tag tag2 = createTag("travel");
             em.persist(tag1);
@@ -82,6 +94,14 @@ public class InitDB {
             boardTag.setBoard(board);
             boardTag.setTag(tag);
             return boardTag;
+        }
+
+        private Comment createComment(Board board, Member member, String comment) {
+            Comment createdComment = new Comment();
+            createdComment.addMember(member);
+            createdComment.addBoard(board);
+            createdComment.setComment(comment);
+            return createdComment;
         }
     }
 }
