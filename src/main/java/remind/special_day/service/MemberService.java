@@ -38,6 +38,10 @@ public class MemberService implements UserDetailsService {
     private final TokenProvider tokenProvider;
     private final RedisService redisService;
 
+
+    /**
+     * 회원가입
+     */
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
@@ -49,6 +53,9 @@ public class MemberService implements UserDetailsService {
         return MemberResponseDto.of(memberRepository.save(member));
     }
 
+    /**
+     * 로그인
+     */
     @Transactional
     public TokenDto login(MemberRequestDto memberRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
@@ -76,6 +83,9 @@ public class MemberService implements UserDetailsService {
         return tokenDto;
     }
 
+    /**
+     * 재발급
+     */
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
         // 1. Refresh Token 검증
@@ -117,6 +127,9 @@ public class MemberService implements UserDetailsService {
         return tokenDto;
     }
 
+    /**
+     * 로그아웃
+     */
     @Transactional
     public String logout() {
         MemberResponseDto myInfo = getMyInfo();
@@ -129,6 +142,9 @@ public class MemberService implements UserDetailsService {
         return myInfo.getEmail();
     }
 
+    /**
+     * Member 조회 by email
+     */
     @Transactional(readOnly = true)
     public MemberResponseDto getMemberInfo(String email) {
         return memberRepository.findByEmail(email)
@@ -136,6 +152,9 @@ public class MemberService implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
     }
 
+    /**
+     * 현재 로그인된 Member 조회
+     */
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     @Transactional(readOnly = true)
     public MemberResponseDto getMyInfo() {
@@ -144,6 +163,9 @@ public class MemberService implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
+    /**
+     * Member 유효성 검사
+     */
     public boolean isValidateDuplicateMember(Member member) {
         Optional<Member> getMember = memberRepository.findByEmail(member.getEmail());
         return getMember.isEmpty();

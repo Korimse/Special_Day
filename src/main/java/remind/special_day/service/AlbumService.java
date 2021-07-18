@@ -32,4 +32,23 @@ public class AlbumService {
         }
         return board;
     }
+
+    /**
+     * Update Album
+     */
+
+
+    /**
+     * Delete Album
+     */
+
+
+    /**
+     * Album 조회 by board_id
+     */
+
+
+    /**
+     * Album 조회 by member_id
+     */
 }

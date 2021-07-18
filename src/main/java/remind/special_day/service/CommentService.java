@@ -25,7 +25,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
     /**
-     * Comment 조회 - board_id
+     * Comment 조회 by board_id
      */
     public List<CommentResponseDto> findAllByBoardId(Long boardId) {
         return commentRepository.findAllByBoardId(boardId)
@@ -34,7 +34,7 @@ public class CommentService {
     }
 
     /**
-     * Comment 조회 - member_id
+     * Comment 조회 by member_id
      */
     public List<CommentResponseDto> findAllByMemberId(Long memberId) {
         return commentRepository.findAllByMemberId(memberId)

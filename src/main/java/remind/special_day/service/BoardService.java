@@ -46,7 +46,7 @@ public class BoardService {
     }
 
     /**
-     * Tag를 통해 BoardList 조회
+     * BoardList 조회 by tag
      */
     public List<BoardListResponseDto> findBoardByTag(String tag) {
         return boardRepositorySupport.findByTag(tag)
@@ -57,7 +57,7 @@ public class BoardService {
     }
 
     /**
-     * Id를 통해 BoardList 조회
+     * BoardList 조회 by email
      */
     public List<BoardListResponseDto> findBoardById(String email) {
         return boardRepositorySupport.findByMember(email)
@@ -68,7 +68,7 @@ public class BoardService {
     }
 
     /**
-     * Area를 통해 BoardList 조회
+     * BoardList 조회 by area
      */
     public List<BoardListResponseDto> findBoardByArea(String area) {
         return boardRepositorySupport.findByArea(area)
@@ -78,7 +78,7 @@ public class BoardService {
     }
 
     /**
-     * board_id를 통해 Board 조회
+     * Board 조회 by board_id
      */
     public List<BoardResponseDto> findBoardByBoardId(Long id) {
         return boardRepository.findById(id)
@@ -88,8 +88,7 @@ public class BoardService {
     }
 
     /**
-     * Add Board
-     * 글 작성
+     * Board 추가
      */
     @Transactional
     public Long addBoard(BoardAddRequestDto requestDto) {
@@ -105,6 +104,9 @@ public class BoardService {
         return board.getId();
     }
 
+    /**
+     * Board 수정
+     */
     @Transactional
     public Long UpdateBoard(Long board_id, BoardUpdateRequestDto requestDto) {
 
@@ -120,6 +122,9 @@ public class BoardService {
         return board_id;
     }
 
+    /**
+     * Board 삭제
+     */
     @Transactional
     public Long deleteBoard(Long boardId) {
         Long currentMemberId = SecurityUtil.getCurrentMemberId();

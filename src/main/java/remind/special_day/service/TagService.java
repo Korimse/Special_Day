@@ -11,6 +11,7 @@ import remind.special_day.repository.BoardTagRepository;
 import remind.special_day.repository.TagRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -45,6 +46,14 @@ public class TagService {
                 boardTag.addTag(savedTag);
             }
         });
+    }
+
+    @Transactional
+    public void deleteBoardTag(Board board, String tag) {
+        BoardTag boardTag = boardTagRepository.findByTag(tag).orElseThrow(RuntimeException::new);
+        boardTagRepository.delete(boardTag);
+        Tag tag1 = tagRepository.findByTag(tag).orElseThrow(RuntimeException::new);
+        tagRepository.delete(tag1);
     }
 
     public Tag addTag(String tag) {
