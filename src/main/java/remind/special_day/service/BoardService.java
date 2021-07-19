@@ -1,7 +1,6 @@
 package remind.special_day.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import remind.special_day.domain.Board;
@@ -10,18 +9,14 @@ import remind.special_day.dto.board.BoardAddRequestDto;
 import remind.special_day.dto.board.BoardListResponseDto;
 import remind.special_day.dto.board.BoardResponseDto;
 import remind.special_day.dto.board.BoardUpdateRequestDto;
-import remind.special_day.dto.tag.TagResponseDto;
 import remind.special_day.exception.member.EmailNotFound;
 import remind.special_day.repository.BoardRepository;
 import remind.special_day.repository.BoardRepositorySupport;
 import remind.special_day.repository.MemberRepository;
-import remind.special_day.repository.TagRepository;
 import remind.special_day.util.SecurityUtil;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -118,6 +113,9 @@ public class BoardService {
         }
         if(!requestDto.getTags().isEmpty()) {
             tagService.updateBoardTag(board, requestDto.getTags());
+        }
+        if(!requestDto.getAlbums().isEmpty()) {
+            albumService.updateBoardAlbums(board, requestDto);
         }
         return board_id;
     }
