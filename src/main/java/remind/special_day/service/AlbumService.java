@@ -58,7 +58,6 @@ public class AlbumService {
                 album.addBoard(board);
             }
         }
-
         return board;
     }
 

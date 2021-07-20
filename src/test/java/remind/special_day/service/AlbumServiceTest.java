@@ -39,23 +39,6 @@ class AlbumServiceTest {
                 .content("hi")
                 .createDate(LocalDateTime.now())
                 .build();
-//        Album album1 = Album.builder()
-//                .url("")
-//                .filename(photo1.getOriginalFilename())
-//                .build();
-//        Album album2 = Album.builder()
-//                .url("")
-//                .filename(photo2.getOriginalFilename())
-//                .build();
-//        Album album3 = Album.builder()
-//                .url("")
-//                .filename(photo3.getOriginalFilename())
-//                .build();
-//
-//        board.getAlbums().add(album1);
-//        board.getAlbums().add(album2);
-//        board.getAlbums().add(album3);
-
 
         List<MultipartFile> filelist = new ArrayList<>();
         filelist.add(photo1);
