@@ -111,9 +111,11 @@ public class ChatService {
      * Update !checked -> checked
      */
     @Transactional
-    public void updateChatLogRead(Long chatId, String email) {
+    public Long updateChatLogRead(Long chatId, String email) {
         List<ChatLog> allByChatIdAndCheckedAndReceiver = chatLogRepository.findAllByChatIdAndCheckedAndReceiver(chatId, false, email);
         allByChatIdAndCheckedAndReceiver.forEach(ChatLog::updateChecked);
+
+        return chatId;
     }
 
 }
