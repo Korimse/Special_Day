@@ -35,9 +35,6 @@ public class Member {
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-    private List<Chat> chats = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private Set<Board> boards = new HashSet<>();
 
     @Builder
