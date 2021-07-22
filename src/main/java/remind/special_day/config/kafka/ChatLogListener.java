@@ -14,13 +14,13 @@ import remind.special_day.service.ChatService;
 public class ChatLogListener {
 
     private final SimpMessagingTemplate template;
-    private final ChatService chatService;
 
     @KafkaListener(
             topics = KafkaConstants.KAFKA_TOPIC,
             groupId = "foo")
     public void listen(ChatLog chatLog) {
         log.info("sending via kafka listener.. kafka-chat");
-        template.convertAndSend("/topic/group", chatLog);
+        Long id = chatLog.getChat().getId();
+        template.convertAndSend("/topic/group/" + id, chatLog);
     }
 }

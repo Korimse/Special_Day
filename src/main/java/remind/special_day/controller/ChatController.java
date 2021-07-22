@@ -1,23 +1,43 @@
 package remind.special_day.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import remind.special_day.config.kafka.KafkaConstants;
+import remind.special_day.domain.Chat;
 import remind.special_day.domain.ChatLog;
 import remind.special_day.dto.chat.ChatListResponseDto;
 import remind.special_day.dto.chat.ChatRequestDto;
 import remind.special_day.service.ChatService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ChatController {
 
     private final ChatService chatService;
+    private final KafkaTemplate<String, ChatLog> kafkaTemplate;
+
+    @PostMapping("/publish")
+    public ResponseEntity<Void> sendMessages(@RequestBody ChatLog chatLog) {
+        try{
+            log.info("Produce message : " + chatLog.toString());
+            chatLog.updateDate();
+
+            kafkaTemplate.send(KafkaConstants.KAFKA_TOPIC, chatLog).get();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+    }
 
     @PostMapping("/chat")
     public ResponseEntity<Long> addChatRoom(@RequestBody ChatRequestDto chatRequestDto) {

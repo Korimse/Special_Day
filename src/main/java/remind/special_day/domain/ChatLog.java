@@ -1,9 +1,6 @@
 package remind.special_day.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ChatLog {
 
     @Id
@@ -36,6 +34,10 @@ public class ChatLog {
         this.message = message;
         this.sender = sender;
         this.receiver = receiver;
+    }
+
+    public void updateDate() {
+        this.createDate = LocalDateTime.now();
     }
 
     public void updateChecked() {
