@@ -1,5 +1,6 @@
 package remind.special_day.controller.connect;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -7,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@Api(tags = {"5. Redis"})
 @RestController
 @RequestMapping("/redis")
 @RequiredArgsConstructor

@@ -48,13 +48,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/member/**").permitAll()
                 .antMatchers("/board/**").permitAll()
                 .antMatchers("/comment/**").permitAll()
                 .antMatchers("/kafka-chat/**").permitAll()
                 .antMatchers("/kafka/**").permitAll()
                 .antMatchers("/chat/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+
                 .anyRequest().authenticated()
 
                 .and()

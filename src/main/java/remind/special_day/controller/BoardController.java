@@ -1,5 +1,7 @@
 package remind.special_day.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Api(tags = {"2. Board"})
 @RestController
 @RequestMapping("/board")
 @RequiredArgsConstructor

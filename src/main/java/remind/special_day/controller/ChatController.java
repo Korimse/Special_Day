@@ -1,5 +1,6 @@
 package remind.special_day.controller;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
@@ -19,6 +20,7 @@ import remind.special_day.service.ChatService;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Api(tags = {"4. Chat"})
 @Slf4j
 @RestController
 @RequiredArgsConstructor

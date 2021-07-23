@@ -1,5 +1,6 @@
 package remind.special_day.controller;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,7 @@ import remind.special_day.service.CommentService;
 
 import java.util.List;
 
+@Api(tags = {"3. Comment"})
 @RestController
 @RequestMapping("/comment")
 @RequiredArgsConstructor
