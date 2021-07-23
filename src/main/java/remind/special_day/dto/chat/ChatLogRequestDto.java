@@ -12,7 +12,10 @@ import java.time.LocalDateTime;
 public class ChatLogRequestDto {
 
     private String message;
-    private String sender;
-    private String receiver;
-    private Long chatId;
+    private Long receive_chatId;
+    private LocalDateTime createDate;
+
+    public void updateCreateDate() {
+        this.createDate = LocalDateTime.now();
+    }
 }

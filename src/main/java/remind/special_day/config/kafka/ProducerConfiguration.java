@@ -10,6 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import remind.special_day.domain.ChatLog;
+import remind.special_day.dto.chat.ChatLogRequestDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Map;
 public class ProducerConfiguration {
 
     @Bean
-    public ProducerFactory<String, ChatLog> producerFactory() {
+    public ProducerFactory<String, ChatLogRequestDto> producerFactory() {
         return new DefaultKafkaProducerFactory<>(ProducerConfigurations());
     }
 
@@ -33,7 +34,7 @@ public class ProducerConfiguration {
     }
 
     @Bean
-    public KafkaTemplate<String, ChatLog> kafkaTemplate(){
+    public KafkaTemplate<String, ChatLogRequestDto> kafkaTemplate(){
         return new KafkaTemplate<>(producerFactory());
     }
 }

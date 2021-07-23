@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import remind.special_day.domain.Chat;
 import remind.special_day.domain.ChatLog;
+import remind.special_day.domain.Member;
 import remind.special_day.dto.chat.ChatListResponseDto;
 import remind.special_day.dto.chat.ChatLogRequestDto;
 import remind.special_day.dto.chat.ChatRequestDto;
@@ -16,6 +17,7 @@ import remind.special_day.util.SecurityUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -46,14 +48,17 @@ public class ChatService {
      */
     @Transactional
     public Long addChatLog(ChatLogRequestDto chatLogRequestDto) {
-        Long chatId = chatLogRequestDto.getChatId();
+        Long chatId = chatLogRequestDto.getReceive_chatId();
         Chat chat = chatRepository.findById(chatId).orElseThrow(RuntimeException::new);
+        Long currentMemberId = SecurityUtil.getCurrentMemberId();
+        Member member = memberRepository.findById(currentMemberId).orElseThrow(RuntimeException::new);
 
         ChatLog chatLog = ChatLog.builder()
                 .message(chatLogRequestDto.getMessage())
-                .sender(chatLogRequestDto.getSender())
-                .receiver(chatLogRequestDto.getReceiver())
+                .sender(member.getEmail())
+                .receiver(chatLogRequestDto.getReceive_chatId().toString())
                 .createDate(LocalDateTime.now())
+                .checked(false)
                 .build();
 
         chatLog.addChat(chat);

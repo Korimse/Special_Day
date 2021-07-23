@@ -24,6 +24,7 @@ public class BoardAddRequestDto {
     @NotEmpty(message = "테그는 필수입니다.")
     private Set<String> tags;
 
+    @NotEmpty(message = "사진은 필수입니다.")
     private List<MultipartFile> albums;
 
     public Board to(BoardAddRequestDto requestDto) {

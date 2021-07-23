@@ -29,11 +29,20 @@ public class ChatLog {
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
+//    @Builder
+//    public ChatLog(String message, String sender, String receiver) {
+//        this.message = message;
+//        this.sender = sender;
+//        this.receiver = receiver;
+//    }
+
     @Builder
-    public ChatLog(String message, String sender, String receiver) {
+    public ChatLog(String message, String sender, String receiver, LocalDateTime createDate, boolean checked) {
         this.message = message;
         this.sender = sender;
         this.receiver = receiver;
+        this.createDate = createDate;
+        this.checked = checked;
     }
 
     public void updateDate() {

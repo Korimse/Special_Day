@@ -1,6 +1,7 @@
 package remind.special_day.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import remind.special_day.domain.Board;
@@ -19,6 +20,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -88,6 +90,7 @@ public class BoardService {
     @Transactional
     public Long addBoard(BoardAddRequestDto requestDto) {
         Long currentMemberId = SecurityUtil.getCurrentMemberId();
+        log.info("currentMemberId = " + currentMemberId);
 
         Member member = memberRepository.findById(currentMemberId)
                 .orElseThrow(EmailNotFound::new);

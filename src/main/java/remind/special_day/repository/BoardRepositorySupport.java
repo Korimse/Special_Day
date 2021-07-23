@@ -15,15 +15,22 @@ public class BoardRepositorySupport {
     private final QBoardTag boardTag = QBoardTag.boardTag;
     private final QTag tag1 = QTag.tag1;
     private final QMember member = QMember.member;
+    private final QAlbum album = QAlbum.album;
+    private final QComment comment = QComment.comment1;
     private final JPAQueryFactory jpaQueryFactory;
 
     public List<Board> findByTag(String tag) {
         return jpaQueryFactory.selectFrom(board)
+                .distinct()
                 .join(board.member, member)
                 .fetchJoin()
                 .join(board.boardTags, boardTag)
                 .fetchJoin()
                 .join(boardTag.tag, tag1)
+                .fetchJoin()
+                .join(board.albums, album)
+                .fetchJoin()
+                .leftJoin(board.comments, comment)
                 .fetchJoin()
                 .where(tag1.tag.in(tag))
                 .fetch();
@@ -38,6 +45,10 @@ public class BoardRepositorySupport {
                 .fetchJoin()
                 .join(boardTag.tag, tag1)
                 .fetchJoin()
+                .join(board.albums, album)
+                .fetchJoin()
+                .leftJoin(board.comments, comment)
+                .fetchJoin()
                 .where(board.member.email.eq(email))
                 .fetch();
     }
@@ -50,6 +61,10 @@ public class BoardRepositorySupport {
                 .join(board.boardTags, boardTag)
                 .fetchJoin()
                 .join(boardTag.tag, tag1)
+                .fetchJoin()
+                .join(board.albums, album)
+                .fetchJoin()
+                .leftJoin(board.comments, comment)
                 .fetchJoin()
                 .where(board.area.eq(area))
                 .fetch();

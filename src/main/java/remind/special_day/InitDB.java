@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import remind.special_day.domain.*;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +22,7 @@ public class InitDB {
 
     @PostConstruct
     public void init() {
-        initService.dbInit1();
+//        initService.dbInit1();
     }
 
     @Component
@@ -42,9 +45,9 @@ public class InitDB {
 
             Comment comment1 = createComment(board1, member1, "hi");
             Comment comment2 = createComment(board1, member2, "Oh, Me too");
-            Comment comment3 = createComment(board1, member2, "Fuck");
-            Comment comment4 = createComment(board2, member1, "Don't say F word");
-            Comment comment5 = createComment(board2, member2, "shit");
+            Comment comment3 = createComment(board1, member2, "hello");
+            Comment comment4 = createComment(board2, member1, "Piano man");
+            Comment comment5 = createComment(board2, member2, "Singing");
             em.persist(comment1);
             em.persist(comment2);
             em.persist(comment3);
@@ -63,6 +66,7 @@ public class InitDB {
             em.persist(boardTag1);
             em.persist(boardTag);
             em.persist(boardTag2);
+
         }
 
         private Member createMember(String email, String password){

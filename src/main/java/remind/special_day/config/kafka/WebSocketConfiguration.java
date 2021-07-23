@@ -12,7 +12,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/my-chat").setAllowedOriginPatterns("*").withSockJS();
+        registry.addEndpoint("/kafka-chat").setAllowedOriginPatterns("*").withSockJS();
     }
 
     @Override

@@ -46,8 +46,8 @@ public class BoardController {
         return ResponseEntity.ok(boardService.findBoardByBoardId(id));
     }
 
-    @PostMapping("/write")
-    public ResponseEntity<Long> addBoard(@RequestBody BoardAddRequestDto boardAddRequestDto) {
+    @PostMapping(value = "/write")
+    public ResponseEntity<Long> addBoard(@ModelAttribute BoardAddRequestDto boardAddRequestDto) {
         return ResponseEntity.ok(boardService.addBoard(boardAddRequestDto));
     }
 

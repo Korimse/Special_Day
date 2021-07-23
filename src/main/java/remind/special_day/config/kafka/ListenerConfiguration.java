@@ -10,6 +10,7 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import remind.special_day.domain.ChatLog;
+import remind.special_day.dto.chat.ChatLogRequestDto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,15 +20,15 @@ import java.util.Map;
 public class ListenerConfiguration {
 
     @Bean
-    ConcurrentKafkaListenerContainerFactory<String, ChatLog> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, ChatLog> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    ConcurrentKafkaListenerContainerFactory<String, ChatLogRequestDto> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, ChatLogRequestDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
 
     @Bean
-    public ConsumerFactory<String, ChatLog> consumerFactory() {
-        return new DefaultKafkaConsumerFactory<>(consumerConfigurations(), new StringDeserializer(), new JsonDeserializer<>(ChatLog.class));
+    public ConsumerFactory<String, ChatLogRequestDto> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(consumerConfigurations(), new StringDeserializer(), new JsonDeserializer<>(ChatLogRequestDto.class));
     }
 
     @Bean

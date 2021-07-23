@@ -12,7 +12,7 @@ import remind.special_day.service.CommentService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/comment")
 @RequiredArgsConstructor
 public class CommentController {

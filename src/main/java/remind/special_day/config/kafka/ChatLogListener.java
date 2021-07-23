@@ -6,6 +6,7 @@ import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import remind.special_day.domain.ChatLog;
+import remind.special_day.dto.chat.ChatLogRequestDto;
 import remind.special_day.service.ChatService;
 
 @Slf4j
@@ -18,9 +19,10 @@ public class ChatLogListener {
     @KafkaListener(
             topics = KafkaConstants.KAFKA_TOPIC,
             groupId = "foo")
-    public void listen(ChatLog chatLog) {
-        log.info("sending via kafka listener.. kafka-chat");
-        Long id = chatLog.getChat().getId();
-        template.convertAndSend("/topic/group/" + id, chatLog);
+    public void listen(ChatLogRequestDto chatLog) {
+//        log.info("sending via kafka listener.. kafka-chat");
+        log.info("chatLog = " + chatLog.getMessage() + "  receive = " + chatLog.getReceive_chatId());
+        chatLog.updateCreateDate();
+        template.convertAndSend("/topic/group", chatLog);
     }
 }

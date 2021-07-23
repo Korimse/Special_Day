@@ -12,6 +12,7 @@ import remind.special_day.config.kafka.KafkaConstants;
 import remind.special_day.domain.Chat;
 import remind.special_day.domain.ChatLog;
 import remind.special_day.dto.chat.ChatListResponseDto;
+import remind.special_day.dto.chat.ChatLogRequestDto;
 import remind.special_day.dto.chat.ChatRequestDto;
 import remind.special_day.service.ChatService;
 
@@ -19,18 +20,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class ChatController {
 
     private final ChatService chatService;
-    private final KafkaTemplate<String, ChatLog> kafkaTemplate;
+    private final KafkaTemplate<String, ChatLogRequestDto> kafkaTemplate;
 
-    @PostMapping("/publish")
-    public ResponseEntity<Void> sendMessages(@RequestBody ChatLog chatLog) {
+    @PostMapping("/kafka/publish")
+    public ResponseEntity<Void> sendMessages(@RequestBody ChatLogRequestDto chatLog) {
         try{
             log.info("Produce message : " + chatLog.toString());
-            chatLog.updateDate();
+            log.info(chatLog.getMessage());
 
             kafkaTemplate.send(KafkaConstants.KAFKA_TOPIC, chatLog).get();
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

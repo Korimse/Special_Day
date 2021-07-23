@@ -52,6 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/member/**").permitAll()
                 .antMatchers("/board/**").permitAll()
                 .antMatchers("/comment/**").permitAll()
+                .antMatchers("/kafka-chat/**").permitAll()
+                .antMatchers("/kafka/**").permitAll()
+                .antMatchers("/chat/**").permitAll()
                 .anyRequest().authenticated()
 
                 .and()

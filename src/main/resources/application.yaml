@@ -33,7 +33,7 @@ jwt:
   secret: c21sdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc21sdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10XRvm1hbC1zZWNzZXQK
   token-validity-in-seconds: 86400
 
-spring.jpa.hibernate.ddl-auto: create-drop
+spring.jpa.hibernate.ddl-auto: none
 
 logging:
   level:
