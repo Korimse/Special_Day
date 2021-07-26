@@ -51,4 +51,5 @@ public class MemberController {
     public ResponseEntity<String> logout() {
         return ResponseEntity.ok(memberService.logout());
     }
+
 }

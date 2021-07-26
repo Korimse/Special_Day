@@ -1,0 +1,22 @@
+<script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-messaging.js"></script>
+<script src="/js/notification/notification.js"></script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/notification/sample" method="post" class="login-sample">
+    <label for="email">Enter your email</label>
+    <input type="text" name="email" id="email" required>
+    <label for="password">Enter your password</label>
+    <input type="password" name="password" id="password" required>
+    <button onClick="window.location.href='http://localhost:8080/notification/sample';">
+        Click ME
+    </button>
+</form>
+</body>
+</html>

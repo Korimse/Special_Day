@@ -5,9 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
+import remind.special_day.config.notification.NotificationType;
+import remind.special_day.domain.Chat;
 import remind.special_day.domain.ChatLog;
+import remind.special_day.domain.Member;
 import remind.special_day.dto.chat.ChatLogRequestDto;
+import remind.special_day.dto.firebase.NotificationRequest;
 import remind.special_day.service.ChatService;
+import remind.special_day.service.NotificationService;
 
 @Slf4j
 @Component
@@ -15,6 +20,7 @@ import remind.special_day.service.ChatService;
 public class ChatLogListener {
 
     private final SimpMessagingTemplate template;
+    private final NotificationService notificationService;
 
     @KafkaListener(
             topics = KafkaConstants.KAFKA_TOPIC,

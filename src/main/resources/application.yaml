@@ -6,7 +6,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     password: 1234
-    url: jdbc:mysql://localhost:3306/s_day?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/s_day?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: root
   jpa:
     database: mysql
@@ -38,8 +38,3 @@ spring.jpa.hibernate.ddl-auto: none
 logging:
   level:
     com.tutorial: debug
-
-
-
-
-
