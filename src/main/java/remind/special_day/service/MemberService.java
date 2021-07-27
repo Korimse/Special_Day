@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import remind.special_day.config.jwt.TokenProvider;
 import remind.special_day.domain.Member;
 import remind.special_day.domain.RefreshToken;
+import remind.special_day.dto.chat.ChatLogRequestDto;
+import remind.special_day.dto.firebase.NotificationRequest;
 import remind.special_day.dto.jwt.TokenDto;
 import remind.special_day.dto.jwt.TokenRequestDto;
 import remind.special_day.dto.member.MemberRequestDto;
@@ -24,6 +26,7 @@ import remind.special_day.dto.member.MemberResponseDto;
 import remind.special_day.repository.MemberRepository;
 import remind.special_day.util.SecurityUtil;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -36,6 +39,7 @@ public class MemberService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RedisService redisService;
+    private final NotificationService notificationService;
 
 
     /**
@@ -77,6 +81,13 @@ public class MemberService implements UserDetailsService {
         // Redis Save
         redisService.setData(authentication.getName(), refreshToken.getValue());
         redisService.setDataExpire(authentication.getName(), refreshToken.getValue(), 36000);
+
+        ChatLogRequestDto chat = ChatLogRequestDto.builder()
+                .receive_chatId(1L)
+                .message(memberRequestDto.getEmail() + "님이 Login 하였습니다.")
+                .createDate(LocalDateTime.now())
+                .build();
+        createReceiveNotification(chat);
 
         // 5. 토큰 발급
         return tokenDto;
@@ -185,5 +196,14 @@ public class MemberService implements UserDetailsService {
                 member.getPassword(),
                 Collections.singleton(grantedAuthority)
         );
+    }
+
+    private void createReceiveNotification(ChatLogRequestDto chatLog) {
+        NotificationRequest notificationRequest = NotificationRequest.builder()
+                .title("CHAT RECEIVED")
+                .token(notificationService.getToken(chatLog.getReceive_chatId()))
+                .message(chatLog.getMessage())
+                .build();
+        notificationService.sendNotification(notificationRequest);
     }
 }

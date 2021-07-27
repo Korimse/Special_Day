@@ -1,6 +1,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-messaging.js"></script>
 <script src="/js/notification/notification.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,14 +10,32 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/notification/sample" method="post" class="login-sample">
     <label for="email">Enter your email</label>
     <input type="text" name="email" id="email" required>
     <label for="password">Enter your password</label>
     <input type="password" name="password" id="password" required>
-    <button onClick="window.location.href='http://localhost:8080/notification/sample';">
+    <button onClick="login_test();">
         Click ME
     </button>
-</form>
+<script>
+    function login_test() {
+        var memberId = $("#email").val();
+        var memberPass = $("#password").val();
+        var param = {"email":memberId, "password":memberPass};
+        $.ajax({
+            type:'POST',
+            data: JSON.stringify(param),
+            url:"/member/login",
+            contentType: "application/json; charset=utf-8",
+            success : function(data) {
+                location.href="/notification/sample";
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert("ERROR : 로그인 에러 \n 테스트 간단한 에러 처리");
+            }
+        });
+    }
+
+</script>
 </body>
 </html>

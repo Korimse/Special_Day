@@ -5,13 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import remind.special_day.config.notification.NotificationType;
 import remind.special_day.dto.chat.ChatLogRequestDto;
 import remind.special_day.dto.firebase.NotificationRequest;
 import remind.special_day.service.MemberService;
 import remind.special_day.service.NotificationService;
-import remind.special_day.util.SecurityUtil;
-
 import java.time.LocalDateTime;
 
 @Controller
@@ -39,23 +36,11 @@ public class NotificationApiController {
         return "fragments/sample";
     }
 
-    @PostMapping("/notification/sample")
-    public String post_notice(@RequestParam("email") String email) {
-        ChatLogRequestDto chat = ChatLogRequestDto.builder()
-                .receive_chatId(1L)
-                .message("Login 하였습니다.")
-                .createDate(LocalDateTime.now())
-                .build();
-        createReceiveNotification(chat);
-        log.info("chat : " + chat.getMessage());
-        return "fragments/sample";
-    }
-
     private void createReceiveNotification(ChatLogRequestDto chatLog) {
         NotificationRequest notificationRequest = NotificationRequest.builder()
                 .title("CHAT RECEIVED")
                 .token(notificationService.getToken(chatLog.getReceive_chatId()))
-                .message(NotificationType.POST_RECEIVED.generateNotificationMessage(chatLog))
+                .message(chatLog.getMessage())
                 .build();
         notificationService.sendNotification(notificationRequest);
     }
