@@ -17,6 +17,7 @@
     <button onClick="login_test();">
         Click ME
     </button>
+    <p id="isSuccess"></p>
 <script>
     function login_test() {
         var memberId = $("#email").val();
@@ -28,7 +29,7 @@
             url:"/member/login",
             contentType: "application/json; charset=utf-8",
             success : function(data) {
-                location.href="/notification/sample";
+                document.getElementById('isSuccess').innerHTML = "FCM SUCCESS";
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert("ERROR : 로그인 에러 \n 테스트 간단한 에러 처리");
