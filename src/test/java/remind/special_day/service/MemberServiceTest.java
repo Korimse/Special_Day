@@ -93,23 +93,4 @@ class MemberServiceTest {
         assertThat(refreshToken.getValue()).isEqualTo(redisService.getData(memberRequestDto.getEmail()));
     }
 
-    @Test
-    void 재발급() {
-
-        TokenRequestDto tokenRequestDto = new TokenRequestDto("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTYyNjI3NTcxNX0.XafGwlkHuXCJ8CFwiSMOyeXaBkSGIdwCDsAbXVC72KqkSfegyWhD5WjWWFrp9uns1xIr6EWiUYLBaOAI9N1VQA", "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE2MjY1NzYzNDJ9.IG-3xqYnIkLDoM9gE-dCpgTvU-UeOchSqk5z-O7L3LAh_FoM6j3-cunFc0eCU7D4mSq_K0tpTz-OZzMDtYw5hg");
-
-        if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
-        }
-
-        Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
-
-        TokenDto tokenDto = tokenProvider.createToken(authentication);
-
-        if (!tokenProvider.validateToken(tokenDto.getRefreshToken())) {
-            throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
-        }
-
-    }
-
 }

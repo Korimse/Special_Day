@@ -200,7 +200,7 @@ public class MemberService implements UserDetailsService {
 
     private void createReceiveNotification(ChatLogRequestDto chatLog) {
         NotificationRequest notificationRequest = NotificationRequest.builder()
-                .title("CHAT RECEIVED")
+                .title("LOGIN MESSAGE")
                 .token(notificationService.getToken(chatLog.getReceive_chatId()))
                 .message(chatLog.getMessage())
                 .build();
