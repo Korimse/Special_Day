@@ -23,6 +23,6 @@ public class ChatLogListener {
 //        log.info("sending via kafka listener.. kafka-chat");
         log.info("chatLog = " + chatLog.getMessage() + "  receive = " + chatLog.getReceive_chatId());
         chatLog.updateCreateDate();
-        template.convertAndSend("/topic/group", chatLog);
+        template.convertAndSend("/topic/group/" + chatLog.getReceive_chatId(), chatLog);
     }
 }

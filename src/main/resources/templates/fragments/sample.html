@@ -26,10 +26,11 @@
         $.ajax({
             type:'POST',
             data: JSON.stringify(param),
-            url:"/member/login",
+            url:"/member/login/without",
             contentType: "application/json; charset=utf-8",
             success : function(data) {
                 document.getElementById('isSuccess').innerHTML = "FCM SUCCESS";
+                console.log(data);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 alert("ERROR : 로그인 에러 \n 테스트 간단한 에러 처리");

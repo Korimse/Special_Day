@@ -52,6 +52,11 @@ public class ChatController {
         return ResponseEntity.ok(chatService.findChatLogByChatId(chatId));
     }
 
+    @GetMapping("/chat/getall")
+    public ResponseEntity<List<ChatListResponseDto>> getAll() {
+        return ResponseEntity.ok(chatService.findAll());
+    }
+
     @GetMapping("/chat")
     public ResponseEntity<List<ChatListResponseDto>> getChats(@RequestParam String email) {
         return ResponseEntity.ok(chatService.findChatByEmail(email));

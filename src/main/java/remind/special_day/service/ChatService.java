@@ -78,6 +78,13 @@ public class ChatService {
         return chatList;
     }
 
+    public List<ChatListResponseDto> findAll() {
+        List<ChatListResponseDto> collect = chatRepository.findAll().stream()
+                .map(ChatListResponseDto::dto)
+                .collect(Collectors.toList());
+        return collect;
+    }
+
 
     /**
      * ChatLog 조회 by ChatId

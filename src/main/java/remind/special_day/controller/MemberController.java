@@ -42,6 +42,11 @@ public class MemberController {
         return ResponseEntity.ok(memberService.login(memberRequestDto));
     }
 
+    @PostMapping("/login/without")
+    public ResponseEntity<TokenDto> login_with(@RequestBody MemberRequestDto memberRequestDto) {
+        return ResponseEntity.ok(memberService.login_withNotification(memberRequestDto));
+    }
+
     @PostMapping("/reissue")
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ResponseEntity.ok(memberService.reissue(tokenRequestDto));
