@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 public class ChatLogRequestDto {
 
     private String message;
+    private String email;
     private Long receive_chatId;
     private LocalDateTime createDate;
 
@@ -20,7 +21,8 @@ public class ChatLogRequestDto {
     }
 
     @Builder
-    public ChatLogRequestDto(String message, Long receive_chatId, LocalDateTime createDate) {
+    public ChatLogRequestDto(String message, String email, Long receive_chatId, LocalDateTime createDate) {
+        this.email = email;
         this.message = message;
         this.receive_chatId = receive_chatId;
         this.createDate = createDate;
